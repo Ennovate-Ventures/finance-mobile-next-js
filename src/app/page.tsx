@@ -1,5 +1,7 @@
 "use client";
 
+import { httpRequest } from "@/utils/http";
+import { useUser } from "@/utils/store/UserContext";
 import { OTPInput, SlotProps } from "input-otp";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -8,13 +10,33 @@ import { HashLoader } from "react-spinners";
 export default function Home() {
   const [otp, setOtp] = useState("");
   const router = useRouter();
+  const { setUser } = useUser();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const login = async () => {
+    setLoading(true);
+    try {
+      const response = await httpRequest("POST", "/mobilelogin", {
+        otp,
+      });
+
+      if (response) {
+        setUser(response.user);
+        localStorage.setItem("token", response.token);
+        localStorage.setItem("projectId", response.project_id);
+        setLoading(false);
+        // setOtp("");
+        router.push("/overview");
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     if (otp.length == 6) {
-      setTimeout(() => {
-        setOtp("");
-        router.push("/overview");
-      }, 3000);
+      login();
     }
   }, [otp]);
 
@@ -47,7 +69,7 @@ export default function Home() {
           )}
         />
       </div>
-      <div className="mt-5">{otp.length == 6 ? <HashLoader /> : ""}</div>
+      <div className="mt-5">{loading ? <HashLoader /> : ""}</div>
     </div>
   );
 }

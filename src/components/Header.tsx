@@ -31,6 +31,9 @@ function Header() {
             className="menu menu-sm dropdown-content bg-black text-white rounded-box z-[1] mt-3 w-52 p-2 shadow"
           >
              <li>
+              <a onClick={() => router.push("/overview")}>Overview</a>
+            </li>
+             <li>
               <a onClick={() => router.push("/expenditure")}>Expenditure</a>
             </li>
             <li>
