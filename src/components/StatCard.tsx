@@ -10,7 +10,7 @@ function StatCard({
       <div className="stat">
         <div className="stat-title">{text}</div>
         <div className="stat-value">
-            {amount}
+            {Intl.NumberFormat().format(amount)}
         </div>
       </div>
     </div>

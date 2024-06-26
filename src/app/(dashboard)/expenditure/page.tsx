@@ -1,9 +1,9 @@
 "use client";
 
+import LoadingSpinner from "@/components/LoadingSpinner";
 import MainLayout from "@/components/MainLayout";
 import { httpRequest } from "@/utils/http";
 import { useEffect, useState } from "react";
-import { FadeLoader } from "react-spinners";
 
 function Page() {
   const [loading, setLoading] = useState<boolean>(false);
@@ -77,9 +77,7 @@ function Page() {
   return (
     <MainLayout>
       {
-        pageLoading ? <div className="flex flex-row justify-center items-center">
-            <FadeLoader color="black" />
-        </div> : <>
+        pageLoading ? <LoadingSpinner /> : <>
         <div className="mb-5">
         <p className="font-semibold text-base mb-1">Expenditure today</p>
         <p className="text-2xl font-semibold">
