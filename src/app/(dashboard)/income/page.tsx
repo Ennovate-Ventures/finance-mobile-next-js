@@ -12,12 +12,20 @@ function Page() {
     title: "",
     amount: "",
     incAmount: 0,
+    count: 0
   });
 
   const handleTitleChange = (e: any) => {
     setValues({
       ...values,
       title: e.target.value,
+    });
+  };
+
+  const handleCountChange = (e: any) => {
+    setValues({
+      ...values,
+      count: e.target.value,
     });
   };
 
@@ -55,6 +63,7 @@ function Page() {
         title: values.title,
         amount: values.amount,
         project_id: localStorage.getItem("projectId"),
+        count: values.count
       });
       if (response) {
         setLoading(false);
@@ -62,6 +71,7 @@ function Page() {
           title: "",
           amount: "",
           incAmount: 0,
+          count: 0
         });
         fetchData();
       }
@@ -102,6 +112,16 @@ function Page() {
               <p>Amount</p>
               <input
                 onChange={handleAmountChange}
+                type="text"
+                placeholder="Type here"
+                className="input input-bordered text-gray-600 placeholder:text-gray-500 w-full max-w-xs"
+              />
+            </div>
+
+            <div>
+              <p>Count</p>
+              <input
+                onChange={handleCountChange}
                 type="text"
                 placeholder="Type here"
                 className="input input-bordered text-gray-600 placeholder:text-gray-500 w-full max-w-xs"
